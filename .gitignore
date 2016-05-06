@@ -1,2 +1,5 @@
 /node_modules
+.idea/*
+/.idea/cham.iml
+/.idea/workspace.xml
 npm-debug.log
