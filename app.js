@@ -75,17 +75,18 @@ io.on('connection', function(socket) {
   // TODO: Figure out if we want webm to be integrated in the chat or apart
   // TODO: Listener for new users
   // TODO: Listener for new message (connect to db)
-});
-
-/**
+  // 
+  // 
+  /**
  * This handles the usernames when a user exits the application
  * 'disconnect' is a built in listener that listens in on when
  * a disconnect occurs
  */
-io.on('disconnect', function(data) {
-  if(!socket.nickname) return;
-  usernames.splice(usernames.indexOf(socket.nickname), 1);
-  updateUsernames();
+  socket.on('disconnect', function() {
+    if(!socket.nickname) return;
+    usernames.splice(usernames.indexOf(socket.usernames), 1);
+    updateUsernames();
+  });
 });
 
 /**
