@@ -4,12 +4,20 @@
   box-sizing: border-box;
 }
 
+nav {
+  background: #26a69a;
+}
+
 #chatbox {
   padding: 3px;
   float: left;
   position: absolute;
-  top: 85%;
+  top: 80%;
   width: 49.7%;
+}
+
+#errors {
+  color: red;
 }
 
 #m {
@@ -17,10 +25,6 @@
   padding: 10px;
   width: 90%;
   margin-right: .5%;
-}
-
-nav {
-  background: #26a69a;
 }
 
 #chat {
@@ -76,6 +80,11 @@ nav {
 #messages li:nth-child(even) {
   background: #26a69a;
   margin-left: 70%;
+}
+
+#user-name {
+  margin-left: 32%;
+  margin-right: 5%;
 }
 
 #webmFrame {
