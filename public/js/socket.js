@@ -1,6 +1,9 @@
 //dont need to specify the port number because assumes host
 var socket = io();
+var jsonDataWebms;
+var index, len;
 
+$(".button-collapse").sideNav();
 
 $('#usersbox').submit(function(e) {
   // prevent the form from submitting
@@ -22,25 +25,37 @@ $('#usersbox').submit(function(e) {
   * it is sent from #m's value
   */
 $('#chatbox').submit(function(e) {
+
+  $.ajaxSetup({
+  async: false
+  });
+
+$.getJSON( "http://localhost:3000/users/wbmcollection", function( json ) {
+  jsonDataWebms = json;
+  //console.log( "JSON Data: " + json[ 0 ].chatkey );
+});
   // prevent the form from submitting
   e.preventDefault();
   // Here's a basic webm interaction
-  if ($('#m').val() == "you were the chosen one") {
-    // TODO: Figure out how to detect webm playing or not
-    socket.emit('chat message', $('#m').val());
-    $('#m').val('');
-    $('#webm iframe').detach();
-    $('<iframe width="560" height="315" frameborder="0"></iframe>')
-      // TODO: Make the addition be dynamic
-      // TODO: Fill our database with generic tokens that link to webms
-      .attr("src", "https://www.youtube.com/embed/" + "HUBWxiu5cOo?autoplay=1")
-      .appendTo("#webm");
-    $('#webm iframe').show();
-    // TODO: we should figure out if we want to fade out or not
-    $('#webm iframe').delay(5000).fadeOut('slow');
-  }
-  else {
-    chatMessage();
+  for(index = 0, len = jsonDataWebms.length; index < len; ++index)
+  {
+      if ($('#m').val().indexOf(jsonDataWebms[index].chatkey) >= 0 ) {
+        // TODO: Figure out how to detect webm playing or not
+        socket.emit('chat message', $('#m').val());
+        $('#m').val('');
+        $('#webm iframe').detach();
+        $('<iframe width="560" height="315" frameborder="0"></iframe>')
+          // TODO: Make the addition be dynamic
+          // TODO: Fill our database with generic tokens that link to webms
+          .attr("src", jsonDataWebms[index].url + "?autoplay=1")
+          .appendTo("#webm");
+        $('#webm iframe').show();
+        // TODO: we should figure out if we want to fade out or not
+        $('#webm iframe').delay(5000).fadeOut('slow');
+      }
+      else {
+        chatMessage();
+      }
   }
   return false;
 });
@@ -51,6 +66,42 @@ $('#chatbox').submit(function(e) {
 function chatMessage() {
   socket.emit('chat message', $('#m').val());
   $('#m').val('');
+  /*
+  // If it is, compile all user info into one object
+      var newUser = {
+          'username': $('#addUser fieldset input#inputUserName').val(),
+          'email': $('#addUser fieldset input#inputUserEmail').val(),
+          'fullname': $('#addUser fieldset input#inputUserFullname').val(),
+          'age': $('#addUser fieldset input#inputUserAge').val(),
+          'location': $('#addUser fieldset input#inputUserLocation').val(),
+          'gender': $('#addUser fieldset input#inputUserGender').val()
+      }
+
+      // Use AJAX to post the object to our adduser service
+      $.ajax({
+          type: 'POST',
+          data: newUser,
+          url: '/users/adduser',
+          dataType: 'JSON'
+      }).done(function( response ) {
+
+          // Check for successful (blank) response
+          if (response.msg === '') {
+
+              // Clear the form inputs
+              $('#addUser fieldset input').val('');
+
+              // Update the table
+              populateTable();
+
+          }
+          else {
+
+              // If something goes wrong, alert the error message that our service returned
+              alert('Error: ' + response.msg);
+
+          }
+          */
 }
 
 /**
