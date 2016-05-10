@@ -1,9 +1,5 @@
-.DS_Store
-node_modules/
+/node_modules
+.idea/*
+/.idea/cham.iml
+/.idea/workspace.xml
 npm-debug.log
-.idea/
-dump.rdb
-.vscode/
-public/*
-static/dist
-static/css/app.min.css
