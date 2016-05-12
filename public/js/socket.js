@@ -30,10 +30,10 @@ $('#chatbox').submit(function(e) {
   async: false
   });
 
-$.getJSON( "http://localhost:3000/users/wbmcollection", function( json ) {
-  jsonDataWebms = json;
-  //console.log( "JSON Data: " + json[ 0 ].chatkey );
-});
+  $.getJSON( "http://localhost:3000/users/wbmcollection", function( json ) {
+    jsonDataWebms = json;
+    // console.log( "JSON Data: " + json[ 0 ].chatkey );
+  });
   // prevent the form from submitting
   e.preventDefault();
   // Here's a basic webm interaction
@@ -42,16 +42,7 @@ $.getJSON( "http://localhost:3000/users/wbmcollection", function( json ) {
       if ($('#m').val().indexOf(jsonDataWebms[index].chatkey) >= 0 ) {
         // TODO: Figure out how to detect webm playing or not
         socket.emit('chat message', $('#m').val());
-        $('#m').val('');
-        $('#webm iframe').detach();
-        $('<iframe width="560" height="315" frameborder="0"></iframe>')
-          // TODO: Make the addition be dynamic
-          // TODO: Fill our database with generic tokens that link to webms
-          .attr("src", jsonDataWebms[index].url + "?autoplay=1")
-          .appendTo("#webm");
-        $('#webm iframe').show();
-        // TODO: we should figure out if we want to fade out or not
-        $('#webm iframe').delay(5000).fadeOut('slow');
+        webmSend(jsonDataWebms[index].url);
       }
       else {
         chatMessage();
@@ -64,6 +55,7 @@ $.getJSON( "http://localhost:3000/users/wbmcollection", function( json ) {
  * Issue the message to the client
  */
 function chatMessage() {
+  console.log("chat message");
   socket.emit('chat message', $('#m').val());
   $('#m').val('');
   /*
@@ -104,11 +96,33 @@ function chatMessage() {
           */
 }
 
+function webmSend(webmURL) {
+  socket.emit('webm', webmURL);
+  $('#m').val('');
+}
+
 /**
   * This method is the listener for messages from other sockets
   */
 socket.on('chat message', function(data) {
   $('#messages').append('<li><b>' + data.user + ':</b> ' + data.msg + '</li><br>');
+});
+
+socket.on('webm', function(webmURL) {
+  $.getJSON( "http://localhost:3000/users/wbmcollection", function( json ) {
+    jsonDataWebms = json;
+    // console.log( "JSON Data: " + json[ 0 ].chatkey );
+  });
+  $('#m').val('');
+  $('#webm iframe').detach();
+  $('<iframe width="560" height="315" frameborder="0"></iframe>')
+  // TODO: Make the addition be dynamic
+  // TODO: Fill our database with generic tokens that link to webms
+    .attr("src", webmURL + "?autoplay=1")
+    .appendTo("#webm");
+  $('#webm iframe').show();
+  // TODO: we should figure out if we want to fade out or not
+  $('#webm iframe').delay(6000).fadeOut('slow');
 });
 
 socket.on('usernames', function(users) {
