@@ -4,19 +4,9 @@
   box-sizing: border-box;
 }
 
-#chatbox {
-  padding: 3px;
-  float: left;
-  position: absolute;
-  top: 85%;
-  width: 49.7%;
-}
-
-#m {
-  border: 0;
-  padding: 10px;
-  width: 90%;
-  margin-right: .5%;
+iframe {
+  margin-top: 5%;
+  margin-left: 2%;
 }
 
 nav {
@@ -24,13 +14,36 @@ nav {
 }
 
 #chat {
-  background: #E6E6E6;
   border: 1px solid;
   float:left;
   left: 0;
   width: 50%;
   height: 100%;
   padding-top: 2%;
+}
+
+#chatbox {
+  padding: 3px;
+  float: left;
+  position: absolute;
+  top: 80%;
+  width: 49.7%;
+}
+
+#chat-users {
+  margin-left: 2%;
+  margin-top: 2%;
+}
+
+#errors {
+  color: red;
+}
+
+#m {
+  border: 0;
+  padding: 10px;
+  width: 90%;
+  margin-right: .5%;
 }
 
 #container {
@@ -61,14 +74,14 @@ nav {
 
 #messages {
   list-style-type: none;
-  color: #fff;
-  margin: 0;
+  color: #000;
+  margin: 0 0 0 2%;
   padding: 0;
   width: 100%;
   position: relative;
 }
 
-#messages li:nth-child(odd) {
+/*#messages li:nth-child(odd) {
   color: #000;
   margin-right: 70%;
 }
@@ -76,10 +89,11 @@ nav {
 #messages li:nth-child(even) {
   background: #26a69a;
   margin-left: 70%;
-}
+}*/
 
-#webmFrame {
-  display:none;
+#user-name {
+  margin-left: 32%;
+  margin-right: 5%;
 }
 
 #webm {
