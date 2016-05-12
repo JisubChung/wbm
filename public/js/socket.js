@@ -108,13 +108,13 @@ function chatMessage() {
   * This method is the listener for messages from other sockets
   */
 socket.on('chat message', function(data) {
-  $('#messages').append('<li><b>' + data.user + ':</b> ' + data.msg + '</li>');
+  $('#messages').append('<li><b>' + data.user + ':</b> ' + data.msg + '</li><br>');
 });
 
 socket.on('usernames', function(users) {
   var str = '';
   for(i = 0; i<users.length; i++) {
-    str += '<li>' + users[i] + '</li>';
+    str += '<li><b>' + users[i] + '</b></li>';
   }
   $('#users').html(str);
 });

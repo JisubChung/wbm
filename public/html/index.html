@@ -52,7 +52,7 @@
 
     <div id="container">
       <div id="chat">
-        <ul id="messages"></ul>
+        <div id="messages"></div>
       <div class="row">
           <form id="chatbox" class="col s12">
             <div class="row">
@@ -70,12 +70,13 @@
         </div>
         </div>
 
-      <div id="users">
-      </div>
-
       <div id="webm">
+        <div id="chat-users">
+          <ul id="users"></ul>
+        </div>
       </div>
     </div>
+
   </body>
   <!--the socket script has to be AFTER the form is declared-->
   <script type="text/javascript" src="../js/socket.js"></script>
