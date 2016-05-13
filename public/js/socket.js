@@ -2,6 +2,7 @@ var socket = io();
 var jsonDataWebms;
 var index, len;
 
+// enables the mobile navigation menu
 $(".button-collapse").sideNav();
 
 $('#usersbox').submit(function(e) {
@@ -87,7 +88,10 @@ function chatMessage() {
           }
           */
 }
-
+/**
+ * This sends the webm to the socket so we 
+ * can listen in on it and take action
+ */
 function webmSend(webmURL) {
   socket.emit('webm', webmURL);
   $('#m').val('');
@@ -117,6 +121,10 @@ socket.on('webm', function(webmURL) {
   $('#webm iframe').delay(6000).fadeOut('slow');
 });
 
+/**
+ * This updates the user names to the front end so that
+ * we know who is logged in
+ */
 socket.on('usernames', function(users) {
   var str = '';
   for(i = 0; i<users.length; i++) {
