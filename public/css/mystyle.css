@@ -81,16 +81,6 @@ nav {
   position: relative;
 }
 
-/*#messages li:nth-child(odd) {
-  color: #000;
-  margin-right: 70%;
-}
-
-#messages li:nth-child(even) {
-  background: #26a69a;
-  margin-left: 70%;
-}*/
-
 #user-name {
   margin-left: 32%;
   margin-right: 5%;
