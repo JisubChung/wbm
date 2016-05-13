@@ -39,15 +39,13 @@ $('#chatbox').submit(function(e) {
   // Here's a basic webm interaction
   for(index = 0, len = jsonDataWebms.length; index < len; ++index)
   {
-      if ($('#m').val().indexOf(jsonDataWebms[index].chatkey) >= 0 ) {
+      if ($('#m').val() == jsonDataWebms[index].chatkey) {
         // TODO: Figure out how to detect webm playing or not
-        socket.emit('chat message', $('#m').val());
+        //socket.emit('chat message', $('#m').val());
         webmSend(jsonDataWebms[index].url);
       }
-      else {
-        chatMessage();
-      }
   }
+  chatMessage();
   return false;
 });
 
@@ -56,7 +54,9 @@ $('#chatbox').submit(function(e) {
  */
 function chatMessage() {
   console.log("chat message");
-  socket.emit('chat message', $('#m').val());
+  if($('#m').val() != '') {
+    socket.emit('chat message', $('#m').val());
+  }
   $('#m').val('');
   /*
   // If it is, compile all user info into one object
@@ -105,20 +105,20 @@ socket.on('chat message', function(data) {
 });
 
 socket.on('webm', function(webmURL) {
+  console.log("hello");
   $.getJSON( "http://localhost:3000/users/wbmcollection", function( json ) {
     jsonDataWebms = json;
     // console.log( "JSON Data: " + json[ 0 ].chatkey );
   });
   $('#m').val('');
-  $('#webm iframe').detach();
-  $('<iframe width="560" height="315" frameborder="0"></iframe>')
-  // TODO: Make the addition be dynamic
-  // TODO: Fill our database with generic tokens that link to webms
-    .attr("src", webmURL + "?autoplay=1")
+  $('#webm video').detach();
+  $('<video width="640" height="360" frameborder="0" preload controls autoplay><source src="'+ webmURL + '" /></video>')
+    // TODO: Make the addition be dynamic
+    // TODO: Fill our database with generic tokens that link to webms
     .appendTo("#webm");
-  $('#webm iframe').show();
+  $('#webm video').show();
   // TODO: we should figure out if we want to fade out or not
-  $('#webm iframe').delay(6000).fadeOut('slow');
+  $('#webm video').delay(8000).fadeOut('slow');
 });
 
 /**
